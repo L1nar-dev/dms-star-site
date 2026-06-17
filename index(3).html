@@ -1,0 +1,657 @@
+<div style="display: none;">
+DMS STAR SEASON 4 — OFFICIAL WEBSITE
+Copyright (c) 2026 Linar. All rights reserved.
+
+</div>
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DMS STAR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #cc1111;
+      --red-hot: #ff3333;
+      --bg: #080808;
+      --surface: #111111;
+      --card: #161616;
+      --text: #e0e0e0;
+      --muted: #666;
+      --border: #2a2a2a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 57px; left: 0; right: 0;
+      background: rgba(8,8,8,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 24px;
+      flex-direction: column;
+      gap: 0;
+      z-index: 99;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+
+    /* HERO */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 50%, rgba(204,17,17,0.12) 0%, transparent 70%),
+        var(--bg);
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(204,17,17,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(204,17,17,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 20px;
+    }
+
+    /* Стиль чистой CSS-звезды */
+    .hero-icon {
+      width: 140px;
+      height: 140px;
+      
+      /* Заливаем звезду мягким неоновым красным градиентом, как на твоём скрине */
+      background: linear-gradient(135deg, #ff4444 0%, #cc1111 100%);
+      
+      /* Обрезаем блок по форме идеальной пятиконечной звезды */
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      
+      /* Мощное неоновое свечение, ложащееся ровно по лучам звезды */
+      filter: drop-shadow(0 0 25px rgba(255,51,51,0.6)) drop-shadow(0 0 50px rgba(204,17,17,0.3));
+      
+      animation: pulse 3s ease-in-out infinite;
+      will-change: transform;
+    }
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1); 
+        filter: drop-shadow(0 0 25px rgba(255,51,51,0.6)) drop-shadow(0 0 50px rgba(204,17,17,0.3));
+      }
+      50% { 
+        transform: scale(1.05); 
+        filter: drop-shadow(0 0 40px rgba(255,51,51,0.8)) drop-shadow(0 0 80px rgba(204,17,17,0.5));
+      }
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
+      letter-spacing: 0.08em;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(204,17,17,0.4);
+    }
+    .hero-title span { color: var(--red); }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* SECTIONS */
+    section { padding: 100px 48px; }
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: #fff;
+      margin-bottom: 48px;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ABOUT */
+    #about { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .stat {
+      background: var(--card);
+      padding: 28px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--red);
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-top: 4px;
+    }
+
+    /* VIDEO */
+    #video { background: var(--bg); }
+    .video-wrapper {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .video-wrapper iframe {
+      width: 100%; height: 100%;
+      border: none;
+    }
+    .video-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--muted);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+    }
+
+    /* PLAYERS */
+    #players { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .player-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px 16px;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: border-color 0.2s, transform 0.4s ease, opacity 0.4s ease;
+    }
+    .player-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .player-card:hover {
+      border-color: var(--red);
+      transform: translateY(-4px) !important;
+    }
+    .player-avatar {
+      width: 64px;
+      height: 64px;
+      image-rendering: pixelated;
+      margin: 0 auto 12px;
+      display: block;
+      border: 2px solid var(--border);
+    }
+    .player-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+      word-break: break-all;
+    }
+    .player-role {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+      min-height: 1em;
+    }
+    .player-socials { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .player-socials a {
+      font-size: 0.65rem;
+      color: var(--red);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .player-socials a:hover { border-color: var(--red); color: var(--red-hot); }
+
+    /* JOIN */
+    #join { background: var(--bg); }
+    .join-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+    .step {
+      background: var(--card);
+      padding: 32px;
+    }
+    .step-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--red);
+      opacity: 0.4;
+      margin-bottom: 12px;
+    }
+    .step-title {
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+    .step-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .step-desc a { color: var(--red); text-decoration: none; }
+    .step-desc a:hover { color: var(--red-hot); }
+
+    .join-notice {
+      padding: 20px 24px;
+      border-left: 3px solid var(--red);
+      background: var(--card);
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--red);
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* FADE-IN utility */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+      section { padding: 72px 20px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .hero-icon { width: 100px; height: 100px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
+      .players-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">DMS STAR</div>
+    <ul class="nav-links">
+      <li><a href="#about">О сервере</a></li>
+      <li><a href="#players">Игроки</a></li>
+      <li><a href="#join">Вступить</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="mobileMenu">
+    <a href="#about" class="mobile-link">О сервере</a>
+    <a href="#players" class="mobile-link">Игроки</a>
+    <a href="#join" class="mobile-link">Вступить</a>
+  </div>
+
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-icon" id="heroIcon"></div>
+      <div class="hero-title">DMS <span>STAR</span></div>
+      <div class="hero-sub">Minecraft – Season 4</div>
+      <div class="hero-badge">Закрытый сервер</div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text fade-in">
+          <div class="section-label">О проекте</div>
+          <div class="section-title">Что такое DMS STAR?</div>
+          <p>DMS STAR – это закрытый Minecraft-сервер с собственным сообществом, уникальными механиками и атмосферой, которую не найти на паблике.</p>
+          <p>Каждый сезон – новая история. Сезон 4 продолжает традиции проекта.</p>
+        </div>
+        <div class="about-stats fade-in">
+          <div class="stat">
+            <div class="stat-num">4</div>
+            <div class="stat-label">Сезон</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">20</div>
+            <div class="stat-label">Игроков</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Единый сервер</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Контент</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video">
+    <div class="container fade-in">
+      <div class="section-label">Трейлер</div>
+      <div class="section-title">Смотри как это выглядит</div>
+      <div class="video-wrapper">
+        <div class="video-placeholder">[ ТУТ БУДЕТ ВИДЕО О СЕРВЕРЕ, А ПОКА ЧТО ТУТ ЛИНАР UwU ]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="players">
+    <div class="container">
+      <div class="section-label fade-in">Сообщество</div>
+      <div class="section-title fade-in">Игроки сервера</div>
+      <div class="players-grid" id="playersGrid"></div>
+    </div>
+  </section>
+
+  <section id="join">
+    <div class="container">
+      <div class="section-label fade-in">Вступление</div>
+      <div class="section-title fade-in">Как попасть на сервер</div>
+      <div class="join-steps fade-in">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-title">Запиши видео-заявку</div>
+          <div class="step-desc">Длительность – от 2 до 3 минут. Расскажи о себе и почему хочешь попасть на DMS STAR.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-title">Загрузи на YouTube</div>
+          <div class="step-desc">Опубликуй видео с хештегом <a href="https://www.youtube.com/hashtag/НаборНаDMSSTAR" target="_blank">#НаборНаDMSSTAR</a></div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-title">Жди решения</div>
+          <div class="step-desc">Команда сервера рассмотрит заявку и свяжется с тобой.</div>
+        </div>
+      </div>
+      <div class="join-notice fade-in">
+        ⚠️ Набор открывается периодически. Следи за обновлениями проекта.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">DMS STAR</div>
+    <div class="footer-copy">© 2026 DMS STAR. Приватный проект. Все права защищены. Автор дизайна: L1nar</div>
+  </footer>
+
+  <script>
+    const players = [
+      { name: "Archic15YT",    role: "Основатель сервера",                                       avatar: "avatars/Archic15YT.png", socials: { yt: "http://youtube.com/@ArchiePlayYT" } },
+      { name: "L1nar4ik",      role: "Тех-Админ",                                                avatar: null, socials: { tg: "https://t.me/L1nar_dev" } },
+      { name: "ImPokmn",       role: "Любит покемонов",                                          avatar: "avatars/ImPokmn.png", socials: {} },
+      { name: "HANCK_OFFICAL", role: "Шаурмечная птица",                          avatar: "avatars/HANCK_OFFICAL.png", socials: {yt: "https://youtube.com/@xankc?si=rl_dX4Xuv91eme47"} },
+      { name: "Kirok_Play",    role: "Друн",                                                     avatar: "avatars/Kirok_Play.png", socials: {} },
+      { name: "SulfurMC",      role: "16 элемент, не смешной шутник, дурачок",                  avatar: null, socials: {} },
+      { name: "Opt1Mistik",    role: "Маг в мироходческом направлении",                         avatar: null, socials: {} },
+      { name: "Goosoter",      role: "Я хз, что говорить",                                      avatar: "avatars/Goosoter.png", socials: {} },
+      { name: "VITAPROYT",     role: "Художник, музыкант, весельчак",                           avatar: "avatars/VITAPROYT.png", socials: {yt: "https://youtube.com/@vitapro.official?si=DXKGi4YDOp8A6cyz "} },
+      { name: "obibam098",     role: "Это Голем. Это все, что нужно знать",                     avatar: "avatars/obibam098.png", socials: {} },
+      { name: "Resonaris",     role: "Килька в шляпе",                                          avatar: "avatars/placeholder.jpg", socials: {} },
+      { name: "tomat6269",     role: "Почти не играет",                                         avatar: "avatars/tomat6269.png", socials: {} },
+      { name: "FOZAN_52",      role: "Игрок",                                                   avatar: "avatars/FOZAN_52.png", socials: {} },
+      { name: "Ivixm",         role: "Милый котенок",                                           avatar: null, socials: {tg: "https://t.me/ivixm"} },
+      { name: "Nik250000",     role: "Позитивный человек, любит много строить и ПВП на булавах",avatar: null, socials: {} },
+      { name: "Kolii_1",       role: "Инженер, строитель, декоратор",                           avatar: null, socials: {} },
+      { name: "Cat_sfm",       role: "Музыкант",                                                avatar: "avatars/Cat_sfm.png", socials: {} },
+      { name: "Mast_Legenda",  role: "Игрок",                                                   avatar: "avatars/placeholder.jpg", socials: {} },
+      { name: "Dum4izzz",      role: "Сама неотвратимость в лысеющем черепе",                                     avatar: "avatars/placeholder.jpg", socials: {} },
+      { name: "Never_JDH",     role: "Фанат Лололошки",                                         avatar: "avatars/placeholder.jpg", socials: {} },
+    ];
+
+    const FALLBACK_AVATAR = "https://mc-heads.net/avatar/Steve/64";
+
+    function getMcAvatar(name) {
+      return `https://mc-heads.net/avatar/${encodeURIComponent(name)}/64`;
+    }
+
+    function buildSocials(socials) {
+      const links = [];
+      if (socials.tg)      links.push(`<a href="${socials.tg}" target="_blank">TG</a>`);
+      if (socials.vk)      links.push(`<a href="${socials.vk}" target="_blank">VK</a>`);
+      if (socials.yt)      links.push(`<a href="${socials.yt}" target="_blank">YT</a>`);
+      if (socials.discord) links.push(`<a href="#" title="${socials.discord}">DS</a>`);
+      return links.length ? `<div class="player-socials">${links.join('')}</div>` : '';
+    }
+
+    const grid = document.getElementById('playersGrid');
+
+    players.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'player-card';
+      card.style.transitionDelay = `${(i % 5) * 60}ms`;
+
+      const img = document.createElement('img');
+      img.className = 'player-avatar';
+      img.alt = p.name;
+
+      const mcUrl = getMcAvatar(p.name);
+      img.src = p.avatar || mcUrl;
+      img.onerror = function() {
+        if (p.avatar && this.src !== mcUrl) {
+          this.src = mcUrl;
+          this.onerror = () => { this.src = FALLBACK_AVATAR; this.onerror = null; };
+        } else {
+          this.src = FALLBACK_AVATAR;
+          this.onerror = null;
+        }
+      };
+
+      card.innerHTML = `
+        <div class="player-name">${p.name}</div>
+        <div class="player-role">${p.role}</div>
+        ${buildSocials(p.socials)}
+      `;
+      card.insertBefore(img, card.firstChild);
+      grid.appendChild(card);
+    });
+
+    // Параллакс иконки-звезды в hero (только десктоп)
+    const icon = document.getElementById('heroIcon');
+    if (window.innerWidth > 768) {
+      document.addEventListener('mousemove', e => {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const dx = (e.clientX - cx) / cx;
+        const dy = (e.clientY - cy) / cy;
+        icon.style.transform = `translate(${dx * 12}px, ${dy * 12}px)`;
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in, .player-card').forEach(el => observer.observe(el));
+
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
