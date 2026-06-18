@@ -714,48 +714,35 @@ Copyright (c) 2026 Linar. All rights reserved.
     }
     animateParticles();
 
-/* ЛОГИКА ПАРАЛЛАКСА И КЛИКА */
+    /* ЛОГИКА ПАРАЛЛАКСА И КЛИКА */
     let curX = 0, curY = 0, tarX = 0, tarY = 0;
     const isDesktop = window.innerWidth > 768;
 
+    // Следование за мышью (только десктоп)
     if (isDesktop) {
-      // Отслеживаем движение мыши по всему документу
-      document.addEventListener('mousemove', (e) => {
-        // Находим центр звезды на экране динамически
-        const rect = icon.getBoundingClientRect();
-        const starX = rect.left + rect.width / 2;
-        const starY = rect.top + rect.height / 2;
+      document.addEventListener('mousemove', e => {
+        // Координаты центра звезды
+        const starRect = icon.getBoundingClientRect();
+        const starCenterX = starRect.left + starRect.width / 2;
+        const starCenterY = starRect.top + starRect.height / 2;
 
-        // Вычисляем дистанцию от мыши до центра звезды
-        const diffX = e.clientX - starX;
-        const diffY = e.clientY - starY;
+        // Отклонение курсора от центра звезды
+        const diffX = e.clientX - starCenterX;
+        const diffY = e.clientY - starCenterY;
 
-        // Ограничиваем максимальный сдвиг (например, максимум 25 пикселей)
-        tarX = Math.max(-25, Math.min(25, diffX * 0.08));
-        tarY = Math.max(-25, Math.min(25, diffY * 0.08));
-      });
-
-      // При уходе мыши с экрана плавно возвращаем звезду в центр
-      document.addEventListener('mouseleave', () => {
-        tarX = 0;
-        tarY = 0;
+        // Коэффициент чувствительности и ограничение движения
+        tarX = Math.max(-15, Math.min(15, diffX * 0.05));
+        tarY = Math.max(-15, Math.min(15, diffY * 0.05));
       });
     }
 
-    // Движок сглаживания (Lerp)
+    // Движок сглаживания параллакса (Lerp)
     function updateStarPos() {
-      if (isDesktop) {
-        // Плавное приближение текущего положения к целевому
-        curX += (tarX - curX) * 0.1;
+      // Работает, только если звезда не сжата от клика
+      if (!icon.classList.contains('clicked') && isDesktop) {
+        curX += (tarX - curX) * 0.1; // Сглаживание 0.1
         curY += (tarY - curY) * 0.1;
-
-        if (icon.classList.contains('clicked')) {
-          // Если кликнули, сохраняем сдвиг мыши, но добавляем сжатие
-          icon.style.transform = `translate(${curX}px, ${curY}px) scale(0.85)`;
-        } else {
-          // В обычном состоянии плавно двигаем и слегка наклоняем в сторону мыши
-          icon.style.transform = `translate(${curX}px, ${curY}px) rotateX(${-curY * 0.5}deg) rotateY(${curX * 0.5}deg)`;
-        }
+        icon.style.transform = `translate(${curX}px, ${curY}px)`;
       }
       requestAnimationFrame(updateStarPos);
     }
@@ -763,18 +750,13 @@ Copyright (c) 2026 Linar. All rights reserved.
 
     // Логика клика
     icon.addEventListener('click', () => {
+      // Эффект отдачи (сжатие)
       icon.classList.remove('star-pulse');
       icon.classList.add('clicked');
-      
-      // Создаем взрыв частиц
-      for (let i = 0; i < 45; i++) { 
-        particles.push(new PixelParticle(canvas.width / 2, canvas.height / 2)); 
-      }
-      
-      setTimeout(() => { 
-        icon.classList.remove('clicked'); 
-        icon.classList.add('star-pulse'); 
-      }, 120);
+      // Частицы летят из центра холста
+      for (let i = 0; i < 40; i++) { particles.push(new PixelParticle(canvas.width / 2, canvas.height / 2)); }
+      // Возврат пульсации через 100мс
+      setTimeout(() => { icon.classList.remove('clicked'); icon.classList.add('star-pulse'); }, 100);
     });
   </script>
 </body>
