@@ -153,7 +153,7 @@ Copyright (c) 2026 Linar. All rights reserved.
       display: flex;
       align-items: center;
       justify-content: center;
-      perspective: 1000px; /* Добавляем перспективу для 3D наклона */
+      /*perspective: 1000px; — Убрали перспективу, т.к. 3D-поворот больше не нужен */
     }
 
     /* Холст с эффектами разлетающихся пикселей */
@@ -166,7 +166,7 @@ Copyright (c) 2026 Linar. All rights reserved.
       z-index: 2;
     }
 
-    /* Обновленный стиль иконки-звезды */
+    /* Стиль иконки-звезды */
     .hero-icon {
       position: relative;
       z-index: 1;
@@ -182,7 +182,7 @@ Copyright (c) 2026 Linar. All rights reserved.
       will-change: transform, filter; /* Оптимизация производительности */
     }
 
-    /* Пульсация теперь обрабатывается через GSAP для плавности */
+    /* Пульсация обрабатывается через GSAP */
 
     .hero-title {
       font-family: 'Orbitron', sans-serif;
@@ -663,7 +663,6 @@ Copyright (c) 2026 Linar. All rights reserved.
       yoyo: true, // Проигрывать анимацию в обратную сторону
       repeat: -1, // Бесконечный повтор
       ease: "power1.inOut",
-      // GSAP автоматически обрабатывает фильтры, но мы оставим CSS для drop-shadow
     });
 
     /* 2. СИСТЕМА ЧАСТИЦ (ВЗРЫВА) — Canvas */
@@ -719,17 +718,16 @@ Copyright (c) 2026 Linar. All rights reserved.
         const diffX = e.clientX - starCenterX;
         const diffY = e.clientY - starCenterY;
 
-        // Чувствительность движения (увеличим для наглядности)
-        const curX = Math.max(-25, Math.min(25, diffX * 0.12));
-        const curY = Math.max(-25, Math.min(25, diffY * 0.12));
+        // Ограничиваем максимальный сдвиг (например, максимум 25 пикселей)
+        const tarX = Math.max(-25, Math.min(25, diffX * 0.08));
+        const tarY = Math.max(-25, Math.min(25, diffY * 0.08));
 
-        // GSAP ПЛАВНО (без Lerp вручную) перемещает и наклоняет звезду
+        // GSAP ПЛАВНО (без Lerp вручную) перемещает звезду.
+        // МЫ УБРАЛИ rotateX И rotateY, ТЕПЕРЬ ОНА НЕ ВЕРТИТСЯ.
         gsap.to(icon, {
-          x: curX,
-          y: curY,
-          rotateX: -curY * 1.0, // Наклон по вертикали
-          rotateY: curX * 1.0,  // Наклон по горизонтали
-          duration: 0.6, // Время сглаживания
+          x: tarX,
+          y: tarY,
+          duration: 0.7, // Время сглаживания
           ease: "power2.out",
           overwrite: "auto", // Предотвращает конфликты анимаций
         });
@@ -737,7 +735,7 @@ Copyright (c) 2026 Linar. All rights reserved.
 
       // При уходе курсора плавно возвращаем звезду в центр
       document.addEventListener('mouseleave', () => {
-        gsap.to(icon, { x: 0, y: 0, rotateX: 0, rotateY: 0, duration: 1, ease: "elastic.out(1.1, 0.6)" });
+        gsap.to(icon, { x: 0, y: 0, duration: 1, ease: "elastic.out(1.1, 0.6)" });
       });
     }
 
