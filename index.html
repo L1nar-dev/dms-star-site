@@ -153,7 +153,7 @@ Copyright (c) 2026 Linar. All rights reserved.
       display: flex;
       align-items: center;
       justify-content: center;
-      /*perspective: 1000px; — Убрали перспективу, т.к. 3D-поворот больше не нужен */
+      /*perspective: 1000px; — УБРАЛИ ПЕРСПЕКТИВУ ВООбЩЕ */
     }
 
     /* Холст с эффектами разлетающихся пикселей */
@@ -180,9 +180,10 @@ Copyright (c) 2026 Linar. All rights reserved.
       -webkit-user-select: none;
       transition: drop-shadow 0.3s ease;
       will-change: transform, filter; /* Оптимизация производительности */
+      
+      /* Запрещаем любые автоматические CSS-повороты */
+      transform-style: flat;
     }
-
-    /* Пульсация обрабатывается через GSAP */
 
     .hero-title {
       font-family: 'Orbitron', sans-serif;
@@ -648,7 +649,7 @@ Copyright (c) 2026 Linar. All rights reserved.
     });
 
     /* ============================================== */
-    /* == ИНТЕРАКТИВ DMS STAR С GSAP (GreenSock) == */
+    /* == ИНТЕРАКТИВ DMS STAR (БЕЗ GSAP ДЛЯ СЛЕДОВАНИЯ) == */
     /* ============================================== */
     const icon = document.getElementById('heroIcon');
     const canvas = document.getElementById('particleCanvas');
@@ -656,7 +657,7 @@ Copyright (c) 2026 Linar. All rights reserved.
     let particles = [];
     const isDesktop = window.innerWidth > 768;
 
-    /* 1. ПЛАВНАЯ ПУЛЬСАЦИЯ ЗВЕЗДЫ (GSAP) */
+    /* 1. ПЛАВНАЯ ПУЛЬСАЦИЯ ЗВЕЗДЫ (GSAP оставляем, это красиво) */
     gsap.to(icon, {
       scale: 1.06,
       duration: 1.5,
@@ -706,7 +707,10 @@ Copyright (c) 2026 Linar. All rights reserved.
     }
     animateParticles();
 
-    /* 3. СЛЕДОВАНИЕ ЗА КУРСОРOM С GSAP (Lerp по умолчанию) */
+    /* 3. СЛЕДОВАНИЕ ЗА КУРСОРOM — ГАРАНТИРОВАННО БЕЗ ПОВОРОТОВ */
+    let curX = 0, curY = 0, tarX = 0, tarY = 0;
+    const lerpSpeed = 0.1; // Скорость сглаживания движения
+
     if (isDesktop) {
       document.addEventListener('mousemove', e => {
         // Координаты центра звезды
@@ -719,25 +723,29 @@ Copyright (c) 2026 Linar. All rights reserved.
         const diffY = e.clientY - starCenterY;
 
         // Ограничиваем максимальный сдвиг (например, максимум 25 пикселей)
-        const tarX = Math.max(-25, Math.min(25, diffX * 0.08));
-        const tarY = Math.max(-25, Math.min(25, diffY * 0.08));
-
-        // GSAP ПЛАВНО (без Lerp вручную) перемещает звезду.
-        // МЫ УБРАЛИ rotateX И rotateY, ТЕПЕРЬ ОНА НЕ ВЕРТИТСЯ.
-        gsap.to(icon, {
-          x: tarX,
-          y: tarY,
-          duration: 0.7, // Время сглаживания
-          ease: "power2.out",
-          overwrite: "auto", // Предотвращает конфликты анимаций
-        });
+        tarX = Math.max(-25, Math.min(25, diffX * 0.08));
+        tarY = Math.max(-25, Math.min(25, diffY * 0.08));
       });
 
       // При уходе курсора плавно возвращаем звезду в центр
-      document.addEventListener('mouseleave', () => {
-        gsap.to(icon, { x: 0, y: 0, duration: 1, ease: "elastic.out(1.1, 0.6)" });
-      });
+      document.addEventListener('mouseleave', () => { tarX = 0; tarY = 0; });
     }
+
+    // Движок плавного следования (Lerp)
+    function updateStarPos() {
+      if (!icon.classList.contains('clicked') && isDesktop) {
+        // Плавное приближение текущих координат к целевым
+        curX += (tarX - curX) * lerpSpeed;
+        curY += (tarY - curY) * lerpSpeed;
+
+        // ГАРАНТИРУЕМ, ЧТО ИСПОЛЬЗУЕМ ТОЛЬКО translate. 
+        // Мы НЕ пишем rotateX или rotateY вообще. Браузеру нечего вертеть.
+        // perspective: 1000px в CSS тоже убрана.
+        icon.style.transform = `translate(${curX}px, ${curY}px)`;
+      }
+      requestAnimationFrame(updateStarPos);
+    }
+    updateStarPos();
 
     /* 4. ЛОГИКА КЛИКА С GSAP (Эффект отдачи) */
     icon.addEventListener('click', () => {
@@ -746,7 +754,8 @@ Copyright (c) 2026 Linar. All rights reserved.
         particles.push(new PixelParticle(canvas.width / 2, canvas.height / 2)); 
       }
 
-      // GSAP делает красивый эффект отдачи (сжатие -> рикошет -> возврат)
+      // GSAP делает красивый эффект отдачи (сжатие -> рикошет -> возврат).
+      // Здесь overwrite: "auto" важен, чтобы не конфликтовать с lerp-движком.
       gsap.fromTo(icon, 
         { scale: 1 }, 
         { 
